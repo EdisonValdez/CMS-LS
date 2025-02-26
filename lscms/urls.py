@@ -13,16 +13,26 @@ from rest_framework.authtoken.views import obtain_auth_token
 from .api import api_router
 from .authentication import CustomAuthToken
 from django.http import HttpResponse
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.cache import never_cache
+from django.conf import settings
 
-
+@csrf_exempt
+@never_cache
 def health_check(request):
     """
-    Simple view that returns a 200 OK response for health checks.
+    Health check endpoint exempt from middleware interference.
     """
-    return HttpResponse("OK", status=200)
+    # Basic service check
+    return HttpResponse(
+        content="OK",
+        status=200,
+        content_type="text/plain"
+    )
 
-urlpatterns = [
-    # Add the health check at the beginning
+urlpatterns = [ 
+    path('health', health_check, name='health_check_no_slash'),
     path('health/', health_check, name='health_check'),
  
     # Django Admin

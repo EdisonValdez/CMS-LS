@@ -6,16 +6,28 @@ from wagtail.documents import urls as wagtaildocs_urls
 from wagtail import urls as wagtail_urls
 from search import views as search_views
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.cache import never_cache
+from django.conf import settings
 
+@csrf_exempt
+@never_cache
 def health_check(request):
     """
-    Simple view that returns a 200 OK response for health checks.
+    Health check endpoint exempt from middleware interference.
     """
-    return HttpResponse("OK", status=200)
+    # Basic service check
+    return HttpResponse(
+        content="OK",
+        status=200,
+        content_type="text/plain"
+    )
 
 urlpatterns = [
     # Health check must be before the Wagtail catch-all
+    path('health', health_check, name='health_check_no_slash'),
     path('health/', health_check, name='health_check'),
+    path('system-status/health-check', health_check, name='health_check'),
     
     # Your existing patterns
     path('django-admin/', admin.site.urls),
