@@ -1,4 +1,4 @@
-# home/urls.py
+# urls.py
 
 from django.contrib import admin
 from django.urls import path, include
@@ -7,7 +7,6 @@ from wagtail.documents import urls as wagtaildocs_urls
 from wagtail import urls as wagtail_urls
 from search import views as search_views
 from django.http import HttpResponse
-from django.urls import path, include
 
 def health_check(request):
     """
@@ -16,10 +15,18 @@ def health_check(request):
     return HttpResponse("OK", status=200)
 
 urlpatterns = [
-    path('', include('lscms.urls')),   
+    # Health check should be before other patterns to avoid getting caught by Wagtail's catch-all
+    path('health/', health_check, name='health_check'),
+    
+    # Your existing patterns
     path('django-admin/', admin.site.urls),
     path('admin/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
     path('search/', search_views.search, name='search'),
-    path('', include(wagtail_urls)),  
+    
+    # App-specific URLs
+    path('', include('lscms.urls')),
+    
+    # Wagtail catch-all should be last
+    path('', include(wagtail_urls)),
 ]
