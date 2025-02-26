@@ -10,7 +10,7 @@ from .permissions import IsAdminOrReadOnly
 import logging
 logger = logging.getLogger(__name__)
 
-def health_check(request):
+def health_check(request): 
     """
     Debug health check.
     """
