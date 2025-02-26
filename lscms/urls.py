@@ -12,8 +12,18 @@ from django.conf.urls.i18n import i18n_patterns
 from rest_framework.authtoken.views import obtain_auth_token
 from .api import api_router
 from .authentication import CustomAuthToken
+from django.http import HttpResponse
+
+
+def health_check(request):
+    """
+    Simple view that returns a 200 OK response for health checks.
+    """
+    return HttpResponse("OK", status=200)
 
 urlpatterns = [
+
+    path('health/', health_check, name='health_check'),
     # Django Admin
     path('django-admin/', admin.site.urls),
 
