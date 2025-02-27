@@ -66,30 +66,29 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "lscms.urls"
- 
+
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [
+            os.path.join(PROJECT_DIR, "templates"),
         ],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.i18',
-                'wagtail.contrib.settings.context_processors.settings'
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.i18n",  
+                "wagtail.contrib.settings.context_processors.settings",
             ],
         },
     },
 ]
  
 WSGI_APPLICATION = "lscms.wsgi.application"
-
-
+ 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -210,7 +209,7 @@ WAGTAILSEARCH_BACKENDS = {
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = "http://127.0.0.1:8080/admin/"
+WAGTAILADMIN_BASE_URL = "https://cms-ls-yerpb.ondigitalocean.app/admin/"
 
 # Allowed file extensions for documents in the document library.
 # This can be omitted to allow all files, but note that this may present a security risk
